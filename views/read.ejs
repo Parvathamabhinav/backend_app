@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../public/stylesheets/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>EJS </title>
+</head>
+<body>
+    <div class="min-h-screen w-full  bg-zinc-900 p-10 text-white">
+        <h1 class="text-3xl mb-3 tracking-tighter"> All Users</h1>
+        <div class="users flex gap-5 flex-wrap">
+            <% users.forEach(function(user){ %>
+                <div class="user-card border-2 border-zinc-800 rounded-lg p-5 w-60">
+                    <img class="w-full h-40 object-cover rounded-lg mb-3" src="<%= user.image %>" alt="User Image">
+                    <h3 class="text-xl mb-1"><%= user.name %></h3>
+                    <h5 class="text-zinc-400"><%= user.email %></h5>  
+                    <div class="flex gap-3 mt-3">
+                        <a class="text-white-200"  href="/edit/<%= user._id %>">Edit User</a>
+                        <a class="text-red-400" href="/delete/<%= user._id %>">Delete User</a>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+</body>
+</html>
