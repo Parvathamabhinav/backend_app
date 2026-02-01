@@ -1,31 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../public/stylesheets/index.css">
-    <link rel="icon" type="image/png" href="/icon.png">
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>Research Project </title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="icon" type="image/png" href="/icon.png">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Fonts -->
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet">
+
+  <title>All People</title>
+
+  <style>
+    body { font-family: 'Satoshi', sans-serif; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
-<body>
-    <div class="min-h-screen w-full  bg-zinc-900 p-10 text-white">
-        <a href="/index" class="inline-block text-zinc-500 mb-5">Go Back</a>
-       
-        <h1 class="text-3xl mb-3 tracking-tighter"> All People</h1>
-        <div class="people flex gap-5 flex-wrap">
-            <% people.forEach(function(person){ %>
-                <div class="person-card border-2 border-zinc-800 rounded-lg p-5 w-60">
-                    <img class="w-full h-40 object-cover rounded-lg  mb-3" src="<%= person.image %>" alt="Person Image">
-                    <h3 class="text-xl mb-1"><%= person.name %></h3>
-                    <h5 class="text-zinc-400"><%= person.occupation %></h5>  
-                    <div class="flex gap-3 mt-3">
-                        <a class="text-white-200"  href="/edit/<%= person._id %>">Edit Person</a>
-                        <a class="text-red-400" href="/delete/<%= person._id %>">Delete Person</a>
-                    </div>
-                </div>
-            <% }); %>
+
+<body class="min-h-screen bg-gradient-to-br from-black via-zinc-900 to-black text-white">
+
+  <div class="p-10">
+
+    <!-- Top Bar -->
+    <a href="/index"
+       class="inline-flex items-center gap-2 text-zinc-400 hover:text-white transition mb-6">
+      <i data-lucide="arrow-left" class="w-4 h-4"></i>
+      Go Back
+    </a>
+
+    <!-- Heading -->
+    <h1 class="text-4xl font-semibold tracking-tight mb-8">
+      All People
+    </h1>
+
+    <!-- Cards Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <% people.forEach(function(person){ %>
+
+        <div
+          class="group rounded-2xl overflow-hidden
+                 bg-white/5 backdrop-blur-xl
+                 border border-white/10
+                 shadow-[0_10px_40px_rgba(0,0,0,0.6)]
+                 hover:-translate-y-2 hover:shadow-[0_20px_60px_rgba(59,130,246,0.25)]
+                 transition-all duration-500
+                 animate-[fadeUp_0.8s_ease-out]"
+        >
+
+          <!-- Image -->
+          <div class="relative h-44 overflow-hidden">
+            <img
+              src="<%= person.image %>"
+              alt="Person Image"
+              class="w-full h-full object-cover
+                     group-hover:scale-110 transition duration-700"
+            />
+
+            <!-- Image Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t
+                        from-black/70 via-black/20 to-transparent">
+            </div>
+          </div>
+
+          <!-- Content -->
+          <div class="p-5">
+
+            <h3 class="text-xl font-semibold mb-1 tracking-tight">
+              <%= person.name %>
+            </h3>
+
+            <p class="text-sm text-zinc-400 mb-4">
+              <%= person.occupation %>
+            </p>
+
+            <!-- Actions -->
+            <div class="flex items-center justify-between text-sm">
+
+              <a href="/edit/<%= person._id %>"
+                 class="inline-flex items-center gap-1
+                        text-blue-400 hover:text-blue-300 transition">
+                <i data-lucide="edit-3" class="w-4 h-4"></i>
+                Edit
+              </a>
+
+              <a href="/delete/<%= person._id %>"
+                 class="inline-flex items-center gap-1
+                        text-red-400 hover:text-red-300 transition">
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                Delete
+              </a>
+
+            </div>
+
+          </div>
         </div>
+
+      <% }); %>
+
     </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+  </script>
+
 </body>
 </html>

@@ -16,7 +16,7 @@ app.use(cookieParser());
 
 
 app.get('/', (req, res) => {
-  res.render('auth',{mode:'register'});
+  res.render('register');
 });
 
 
@@ -28,12 +28,16 @@ app.post('/register', async (req, res) => {
         password=hash;
         try {
           let user = await userModel.create({ name, email, password });
-          res.render('auth',{mode:'login'});
+          res.redirect('/login');
         } catch (error) {
           res.status(500).send('Error registering user: ' + error.message);
         }
     });
   });
+});
+
+app.get('/login', (req, res) => {
+  res.render('login');
 });
 
 app.post('/login', async (req, res) => {
