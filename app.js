@@ -7,10 +7,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 const userModel = require('./models/user');
+const peopleModel = require('./models/people');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const cookieParser = require('cookie-parser');
-require('dotenv').config();
+require('dotenv').config({quiet: true});
 app.use(cookieParser());
 
 
@@ -61,18 +62,18 @@ app.get('/index', (req, res) => {
 });
 
 app.get('/read', async (req, res) => {
-  let allUsers = await userModel.find({});
-  res.render('read', { users: allUsers });
+  let allPeople = await peopleModel.find({});
+  res.render('read', { people: allPeople });
 });
 
 
 app.post('/create', async (req, res) => {
-  let {name, email, image} = req.body;
+  let {name, occupation, image} = req.body;
   try {
-    await userModel.create({ name, email, image });
+    await peopleModel.create({ name, occupation, image });
     res.redirect('/read');
   } catch (error) {
-    res.status(500).send('Error creating user: ' + error.message);
+    res.status(500).send('Error creating person: ' + error.message);
   }
 });
 
@@ -84,7 +85,7 @@ app.post('/create', async (req, res) => {
 app.get('/delete/:id', async (req, res) => {
   let userId = req.params.id;
   try {
-    await userModel.findByIdAndDelete(userId);
+    await peopleModel.findByIdAndDelete(userId);
     res.redirect('/read');
   }
   catch (error) {
@@ -99,7 +100,7 @@ app.get('/edit/:id', async (req, res) => {
 app.post('/edit', async (req, res) => {
   let { id, name, email, image } = req.body;  
   try {
-    await userModel.findByIdAndUpdate(id, { name, email, image });
+    await peopleModel.findByIdAndUpdate(id, { name, email, image });
     res.redirect('/read');
   } catch (error) {
     res.status(500).send('Error updating user: ' + error.message);
