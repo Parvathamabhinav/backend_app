@@ -10,32 +10,18 @@
 
 <title>Scotch • Login</title>
 
-<!-- Body font -->
+<!-- Fonts -->
 <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet">
-
-<!-- Display font for beautiful letters -->
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
 
 <style>
-  /* Slow, observable physical growth */
   @keyframes growHeight {
-    from {
-      max-height: 70px;
-      opacity: 0;
-    }
-    to {
-      max-height: 520px;
-      opacity: 1;
-    }
+    from { max-height: 70px; opacity: 0; }
+    to   { max-height: 520px; opacity: 1; }
   }
 
-  body {
-    font-family: 'Satoshi', sans-serif;
-  }
-
-  .brand-font {
-    font-family: 'Playfair Display', serif;
-  }
+  body { font-family: 'Satoshi', sans-serif; }
+  .brand-font { font-family: 'Playfair Display', serif; }
 </style>
 </head>
 
@@ -47,12 +33,11 @@
   class="relative w-[380px]
          bg-white/5 backdrop-blur-2xl
          border border-white/10
-         rounded-3xl
-         overflow-hidden
+         rounded-3xl overflow-hidden
          shadow-[0_0_40px_rgba(59,130,246,0.25)]
          animate-[growHeight_4s_linear_forwards]">
 
-  <!-- Subtle static glow -->
+  <!-- Glow -->
   <div class="absolute -inset-2 rounded-3xl
               bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-blue-500/20
               blur-3xl opacity-40 -z-10"></div>
@@ -60,8 +45,8 @@
   <!-- CONTENT -->
   <div class="p-8">
 
-    <!-- BEAUTIFUL BRAND TEXT -->
-    <h1 class="brand-font text-5xl text-center mb-8
+    <!-- BRAND -->
+    <h1 class="brand-font text-5xl text-center mb-6
                font-semibold tracking-[-0.04em]
                bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400
                bg-clip-text text-transparent
@@ -69,6 +54,21 @@
       Scotch
     </h1>
 
+    <!-- MESSAGE BLOCK (FIXED) -->
+    <% if (error || success) { %>
+      <div
+        class="mb-6 px-5 py-3 rounded-xl text-center text-sm font-medium
+               border backdrop-blur-md
+               animate-[fadeUp_0.6s_ease-out]
+               <%= error
+                 ? 'bg-red-500/10 text-red-400 border-red-500/30'
+                 : 'bg-green-500/10 text-green-400 border-green-500/30'
+               %>">
+        <%= error || success %>
+      </div>
+    <% } %>
+
+    <!-- FORM -->
     <form action="/login" method="post" class="space-y-6">
 
       <!-- Username -->

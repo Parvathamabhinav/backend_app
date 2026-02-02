@@ -18,6 +18,15 @@ app.use(cookieParser());
 
 app.set('view engine', 'ejs');
 
+// =======================
+// GLOBAL MESSAGE MIDDLEWARE ✅
+// =======================
+// This ensures error & success ALWAYS exist in EJS
+app.use((req, res, next) => {
+  res.locals.error = null;
+  res.locals.success = null;
+  next();
+});
 
 // =======================
 // ROUTES
@@ -25,23 +34,22 @@ app.set('view engine', 'ejs');
 
 // REGISTER PAGE
 app.get('/', (req, res) => {
-  res.render('register', { query: req.query });
+  res.render('register');
 });
-
 
 // REGISTER USER
 app.post('/register', async (req, res) => {
   try {
-    let { name, email, password } = req.body;
+    const { name, email, password } = req.body;
 
-    // Check if email already exists
     const existingUser = await userModel.findOne({ email });
     if (existingUser) {
-      return res.redirect('/?error=Email already exists');
+      return res.render('register', {
+        error: 'Email already exists'
+      });
     }
 
-    const salt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(password, salt);
+    const hash = await bcrypt.hash(password, 10);
 
     await userModel.create({
       name,
@@ -49,33 +57,39 @@ app.post('/register', async (req, res) => {
       password: hash
     });
 
-    res.redirect('/login?success=Account created successfully');
+    res.render('login', {
+      success: 'Account created successfully. Please login.'
+    });
 
   } catch (err) {
-    res.redirect('/?error=Something went wrong');
+    res.render('register', {
+      error: 'Something went wrong. Try again.'
+    });
   }
 });
 
-
 // LOGIN PAGE
 app.get('/login', (req, res) => {
-  res.render('login', { query: req.query });
+  res.render('login');
 });
-
 
 // LOGIN USER
 app.post('/login', async (req, res) => {
   try {
-    let { name, password } = req.body;
+    const { name, password } = req.body;
 
     const user = await userModel.findOne({ name });
     if (!user) {
-      return res.redirect('/login?error=Invalid username or password');
+      return res.render('login', {
+        error: 'Invalid username or password'
+      });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.redirect('/login?error=Invalid username or password');
+      return res.render('login', {
+        error: 'Invalid username or password'
+      });
     }
 
     const token = jwt.sign(
@@ -88,52 +102,67 @@ app.post('/login', async (req, res) => {
     res.redirect('/index');
 
   } catch (err) {
-    res.redirect('/login?error=Login failed');
+    res.render('login', {
+      error: 'Login failed. Please try again.'
+    });
   }
 });
-
 
 // INDEX PAGE
 app.get('/index', (req, res) => {
   res.render('index');
 });
 
-
 // READ PEOPLE
 app.get('/read', async (req, res) => {
-  const allPeople = await peopleModel.find({});
-  res.render('read', { people: allPeople });
+  const people = await peopleModel.find({});
+  res.render('read', { people });
 });
-
 
 // CREATE PERSON
 app.post('/create', async (req, res) => {
   try {
     const { name, occupation, image } = req.body;
+
     await peopleModel.create({ name, occupation, image });
-    res.redirect('/read?success=Person added');
+
+    const people = await peopleModel.find({});
+    res.render('read', {
+      people,
+      success: 'Person added successfully'
+    });
+
   } catch (err) {
-    res.redirect('/index?error=Failed to create person');
+    res.render('index', {
+      error: 'Failed to create person'
+    });
   }
 });
-
 
 // DELETE PERSON
 app.get('/delete/:id', async (req, res) => {
   try {
     await peopleModel.findByIdAndDelete(req.params.id);
-    res.redirect('/read?success=Person deleted');
+
+    const people = await peopleModel.find({});
+    res.render('read', {
+      people,
+      success: 'Person deleted successfully'
+    });
+
   } catch (err) {
-    res.redirect('/read?error=Delete failed');
+    const people = await peopleModel.find({});
+    res.render('read', {
+      people,
+      error: 'Delete failed'
+    });
   }
 });
 
-
 // EDIT PAGE
-app.get('/edit/:id', (req, res) => {
-  res.render('edit', { userId: req.params.id, query: req.query });
+app.get('/edit/:id', async (req, res) => {
+  res.render('edit', { userId: req.params.id });
 });
-
 
 // UPDATE PERSON
 app.post('/edit', async (req, res) => {
@@ -146,13 +175,20 @@ app.post('/edit', async (req, res) => {
       image
     });
 
-    res.redirect('/read?success=User updated successfully');
+    const people = await peopleModel.find({});
+    res.render('read', {
+      people,
+      success: 'User updated successfully'
+    });
 
   } catch (err) {
-    res.redirect('/read?error=Update failed');
+    const people = await peopleModel.find({});
+    res.render('read', {
+      people,
+      error: 'Update failed'
+    });
   }
 });
-
 
 // SERVER
 app.listen(port, () => {

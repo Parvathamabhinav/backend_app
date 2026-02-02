@@ -9,31 +9,18 @@
 
 <title>Scotch • Register</title>
 
-<!-- Body font -->
+<!-- Fonts -->
 <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet">
-
-<!-- Display font (beautiful letters) -->
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
 
 <style>
   @keyframes growHeight {
-    from {
-      max-height: 60px;
-      opacity: 0;
-    }
-    to {
-      max-height: 720px;
-      opacity: 1;
-    }
+    from { max-height: 60px; opacity: 0; }
+    to   { max-height: 720px; opacity: 1; }
   }
 
-  body {
-    font-family: 'Satoshi', sans-serif;
-  }
-
-  .brand-font {
-    font-family: 'Playfair Display', serif;
-  }
+  body { font-family: 'Satoshi', sans-serif; }
+  .brand-font { font-family: 'Playfair Display', serif; }
 </style>
 </head>
 
@@ -45,8 +32,7 @@
   class="relative w-[390px]
          bg-white/5 backdrop-blur-2xl
          border border-white/10
-         rounded-3xl
-         overflow-hidden
+         rounded-3xl overflow-hidden
          animate-[growHeight_3.5s_linear_forwards]
          shadow-[0_0_60px_rgba(59,130,246,0.25)]
          select-none">
@@ -56,11 +42,11 @@
               bg-gradient-to-r from-blue-500/30 via-purple-500/20 to-blue-500/30
               blur-3xl opacity-50 -z-10"></div>
 
-  <!-- INNER CONTENT -->
+  <!-- CONTENT -->
   <div class="p-8">
 
-    <!-- BEAUTIFUL BRAND TEXT -->
-    <h1 class="brand-font text-5xl text-center mb-8
+    <!-- BRAND -->
+    <h1 class="brand-font text-5xl text-center mb-6
                font-semibold tracking-[-0.04em]
                bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400
                bg-clip-text text-transparent
@@ -68,91 +54,106 @@
       Scotch
     </h1>
 
+    <!-- MESSAGE BLOCK (FIXED) -->
+    <% if (error || success) { %>
+      <div
+        class="mb-6 px-5 py-3 rounded-xl text-center text-sm font-medium
+               border backdrop-blur-md
+               animate-[fadeUp_0.6s_ease-out]
+               <%= error
+                 ? 'bg-red-500/10 text-red-400 border-red-500/30'
+                 : 'bg-green-500/10 text-green-400 border-green-500/30'
+               %>">
+        <%= error || success %>
+      </div>
+    <% } %>
+
+    <!-- FORM -->
     <form action="/register" method="post" class="space-y-6">
 
-  <!-- Username -->
-  <div class="relative">
-    <i data-lucide="user"
-       class="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400"></i>
+      <!-- Username -->
+      <div class="relative">
+        <i data-lucide="user"
+           class="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400"></i>
 
-    <input
-      name="name"
-      required
-      placeholder=" "
-      class="peer w-full pl-12 pr-4 py-4 rounded-xl
-             bg-black/30 border border-white/10
-             outline-none text-sm tracking-wide"/>
+        <input
+          name="name"
+          required
+          placeholder=" "
+          class="peer w-full pl-12 pr-4 py-4 rounded-xl
+                 bg-black/30 border border-white/10
+                 outline-none text-sm tracking-wide"/>
 
-    <label
-      class="absolute left-12 top-4 text-sm text-zinc-400
-             transition-all
-             peer-focus:-top-2 peer-focus:text-xs peer-focus:text-blue-400
-             peer-not-placeholder-shown:-top-2
-             peer-not-placeholder-shown:text-xs
-             peer-not-placeholder-shown:text-blue-400">
-      Username
-    </label>
-  </div>
+        <label
+          class="absolute left-12 top-4 text-sm text-zinc-400
+                 transition-all
+                 peer-focus:-top-2 peer-focus:text-xs peer-focus:text-blue-400
+                 peer-not-placeholder-shown:-top-2
+                 peer-not-placeholder-shown:text-xs
+                 peer-not-placeholder-shown:text-blue-400">
+          Username
+        </label>
+      </div>
 
-  <!-- Email -->
-  <div class="relative">
-    <i data-lucide="mail"
-       class="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400"></i>
+      <!-- Email -->
+      <div class="relative">
+        <i data-lucide="mail"
+           class="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400"></i>
 
-    <input
-      type="email"
-      name="email"
-      required
-      placeholder=" "
-      class="peer w-full pl-12 pr-4 py-4 rounded-xl
-             bg-black/30 border border-white/10
-             outline-none text-sm tracking-wide"/>
+        <input
+          type="email"
+          name="email"
+          required
+          placeholder=" "
+          class="peer w-full pl-12 pr-4 py-4 rounded-xl
+                 bg-black/30 border border-white/10
+                 outline-none text-sm tracking-wide"/>
 
-    <label
-      class="absolute left-12 top-4 text-sm text-zinc-400
-             transition-all
-             peer-focus:-top-2 peer-focus:text-xs peer-focus:text-blue-400
-             peer-not-placeholder-shown:-top-2
-             peer-not-placeholder-shown:text-xs
-             peer-not-placeholder-shown:text-blue-400">
-      Email
-    </label>
-  </div>
+        <label
+          class="absolute left-12 top-4 text-sm text-zinc-400
+                 transition-all
+                 peer-focus:-top-2 peer-focus:text-xs peer-focus:text-blue-400
+                 peer-not-placeholder-shown:-top-2
+                 peer-not-placeholder-shown:text-xs
+                 peer-not-placeholder-shown:text-blue-400">
+          Email
+        </label>
+      </div>
 
-  <!-- Password -->
-  <div class="relative">
-    <i data-lucide="lock"
-       class="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400"></i>
+      <!-- Password -->
+      <div class="relative">
+        <i data-lucide="lock"
+           class="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400"></i>
 
-    <input
-      type="password"
-      name="password"
-      required
-      placeholder=" "
-      class="peer w-full pl-12 pr-4 py-4 rounded-xl
-             bg-black/30 border border-white/10
-             outline-none text-sm tracking-wide"/>
+        <input
+          type="password"
+          name="password"
+          required
+          placeholder=" "
+          class="peer w-full pl-12 pr-4 py-4 rounded-xl
+                 bg-black/30 border border-white/10
+                 outline-none text-sm tracking-wide"/>
 
-    <label
-      class="absolute left-12 top-4 text-sm text-zinc-400
-             transition-all
-             peer-focus:-top-2 peer-focus:text-xs peer-focus:text-blue-400
-             peer-not-placeholder-shown:-top-2
-             peer-not-placeholder-shown:text-xs
-             peer-not-placeholder-shown:text-blue-400">
-      Password
-    </label>
-  </div>
+        <label
+          class="absolute left-12 top-4 text-sm text-zinc-400
+                 transition-all
+                 peer-focus:-top-2 peer-focus:text-xs peer-focus:text-blue-400
+                 peer-not-placeholder-shown:-top-2
+                 peer-not-placeholder-shown:text-xs
+                 peer-not-placeholder-shown:text-blue-400">
+          Password
+        </label>
+      </div>
 
-  <button
-    type="submit"
-    class="w-full py-4 rounded-xl font-semibold tracking-wide
-           bg-gradient-to-r from-blue-500 to-purple-500">
-    Create Account
-  </button>
+      <!-- Submit -->
+      <button
+        type="submit"
+        class="w-full py-4 rounded-xl font-semibold tracking-wide
+               bg-gradient-to-r from-blue-500 to-purple-500">
+        Create Account
+      </button>
 
-</form>
-
+    </form>
 
     <p class="mt-6 text-center text-sm text-zinc-400 tracking-wide">
       Already have an account?

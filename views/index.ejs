@@ -22,7 +22,6 @@
     font-family: 'Playfair Display', serif;
   }
 
-  /* Animations */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
@@ -37,7 +36,7 @@
 
   <!-- Title -->
   <h1
-    class="display-font text-6xl text-center mb-12
+    class="display-font text-6xl text-center mb-8
            tracking-[-0.04em]
            bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400
            bg-clip-text text-transparent
@@ -46,6 +45,20 @@
   >
     Welcome to Our Project
   </h1>
+
+  <!-- MESSAGE BLOCK (FIXED POSITION) -->
+  <% if (error || success) { %>
+    <div
+      class="mb-10 px-6 py-4 rounded-xl text-center text-sm font-medium
+             border backdrop-blur-md
+             animate-[fadeUp_0.6s_ease-out]
+             <%= error
+               ? 'bg-red-500/10 text-red-400 border-red-500/30'
+               : 'bg-green-500/10 text-green-400 border-green-500/30'
+             %>">
+      <%= error || success %>
+    </div>
+  <% } %>
 
   <!-- Form -->
   <form
@@ -126,35 +139,34 @@
     </button>
 
   </form>
+
+  <!-- View All -->
   <a href="/read"
-   class="group relative inline-flex items-center justify-center
-          mt-10 px-8 py-4 rounded-xl
-          font-semibold tracking-wide
-          text-white overflow-hidden">
+     class="group relative inline-flex items-center justify-center
+            mt-12 px-8 py-4 rounded-xl
+            font-semibold tracking-wide
+            text-white overflow-hidden">
 
-  <!-- Animated gradient background -->
-  <span class="absolute inset-0 bg-gradient-to-r
-               from-blue-500 via-purple-500 to-pink-500
-               transition-all duration-500
-               group-hover:scale-110"></span>
+    <span class="absolute inset-0 bg-gradient-to-r
+                 from-blue-500 via-purple-500 to-pink-500
+                 transition-all duration-500
+                 group-hover:scale-110"></span>
 
-  <!-- Glow -->
-  <span class="absolute inset-0 blur-xl opacity-40
-               bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500
-               group-hover:opacity-70 transition"></span>
+    <span class="absolute inset-0 blur-xl opacity-40
+                 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500
+                 group-hover:opacity-70 transition"></span>
 
-  <!-- Button content -->
-  <span class="relative flex items-center gap-2 z-10">
-    <svg xmlns="http://www.w3.org/2000/svg"
-         class="w-5 h-5 group-hover:translate-x-1 transition"
-         fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" />
-    </svg>
-    View All People
-  </span>
+    <span class="relative flex items-center gap-2 z-10">
+      <svg xmlns="http://www.w3.org/2000/svg"
+           class="w-5 h-5 group-hover:translate-x-1 transition"
+           fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" />
+      </svg>
+      View All People
+    </span>
 
-</a>
+  </a>
 
 </div>
 

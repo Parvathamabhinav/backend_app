@@ -18,7 +18,7 @@
 
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+      to   { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
@@ -35,9 +35,23 @@
     </a>
 
     <!-- Heading -->
-    <h1 class="text-4xl font-semibold tracking-tight mb-8">
+    <h1 class="text-4xl font-semibold tracking-tight mb-4">
       All People
     </h1>
+
+    <!-- MESSAGE BLOCK (FIXED) -->
+    <% if (error || success) { %>
+      <div
+        class="mb-8 px-6 py-4 rounded-xl text-center text-sm font-medium
+               border backdrop-blur-md
+               animate-[fadeUp_0.6s_ease-out]
+               <%= error
+                 ? 'bg-red-500/10 text-red-400 border-red-500/30'
+                 : 'bg-green-500/10 text-green-400 border-green-500/30'
+               %>">
+        <%= error || success %>
+      </div>
+    <% } %>
 
     <!-- Cards Grid -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -63,10 +77,8 @@
                      group-hover:scale-110 transition duration-700"
             />
 
-            <!-- Image Overlay -->
             <div class="absolute inset-0 bg-gradient-to-t
-                        from-black/70 via-black/20 to-transparent">
-            </div>
+                        from-black/70 via-black/20 to-transparent"></div>
           </div>
 
           <!-- Content -->
