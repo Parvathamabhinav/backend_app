@@ -1,13 +1,12 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const cookieParser = require('cookie-parser');
 require('dotenv').config({ quiet: true });
-
 const userModel = require('./models/user');
 const peopleModel = require('./models/people');
 
@@ -15,6 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
+require('./config/db')(); // DB CONNECTION
 
 app.set('view engine', 'ejs');
 
@@ -67,7 +67,6 @@ app.post('/register', async (req, res) => {
     });
   }
 });
-
 // LOGIN PAGE
 app.get('/login', (req, res) => {
   res.render('login');
