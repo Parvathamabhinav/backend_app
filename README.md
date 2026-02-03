@@ -1,10 +1,3 @@
-Perfect 👍
-Below is the **complete `README.md` code**.
-You can **copy–paste this directly** into a file named **`README.md`** in your GitHub repo.
-
----
-
-```md
 # Scotch — Full-Stack CRUD Application with Authentication
 
 Scotch is a full-stack web application built using **Node.js, Express, MongoDB, and EJS**.  
@@ -40,9 +33,7 @@ This README is written so that **any developer can clone, configure, and run the
 ## 📁 Project Structure
 
 ```
-
 project-root/
-│
 ├── app.js
 ├── package.json
 ├── .env                # Environment variables (NOT committed)
@@ -68,8 +59,6 @@ project-root/
 │   └── stylesheets/
 │
 └── README.md
-
-```
 ```
 
 ---
@@ -78,17 +67,17 @@ project-root/
 
 Create a file named **`.env`** in the project root.
 
-```env
+```
 PORT=3000
 JWT_KEY=your_super_secret_jwt_key
 MONGODB_URI=your_mongodb_connection_string
-````
+```
 
 ### 🔑 Explanation
 
-* `PORT` – Port where the server runs
-* `JWT_KEY` – Secret key used to sign JWT tokens
-* `MONGODB_URI` – MongoDB connection string
+- `PORT` – Port where the server runs
+- `JWT_KEY` – Secret key used to sign JWT tokens
+- `MONGODB_URI` – MongoDB connection string
 
 ⚠️ **Never commit `.env` to GitHub**
 
@@ -113,19 +102,18 @@ module.exports = async () => {
 ```
 
 You can use:
-
-* MongoDB Atlas (recommended)
-* Local MongoDB (`mongodb://127.0.0.1:27017/dbname`)
+- MongoDB Atlas (recommended)
+- Local MongoDB (`mongodb://127.0.0.1:27017/dbname`)
 
 ---
 
 ## 🔐 Authentication Flow
 
-1. User registers → password is hashed using bcrypt
-2. User logs in → JWT is generated
-3. JWT is stored in an HTTP-only cookie
-4. Protected routes verify JWT via middleware
-5. Logout clears the cookie
+1. User registers → password is hashed using bcrypt  
+2. User logs in → JWT is generated  
+3. JWT is stored in an HTTP-only cookie  
+4. Protected routes verify JWT via middleware  
+5. Logout clears the cookie  
 
 ### `middleware/auth.js`
 
@@ -191,12 +179,12 @@ http://localhost:3000
 
 The following routes require authentication:
 
-* `/index`
-* `/read`
-* `/create`
-* `/edit/:id`
-* `/delete/:id`
-* `/logout`
+- `/index`
+- `/read`
+- `/create`
+- `/edit/:id`
+- `/delete/:id`
+- `/logout`
 
 Unauthenticated users are redirected to `/login`.
 
@@ -236,18 +224,18 @@ db.collection.dropIndex('email_1')
 
 ## 🌍 Deployment Notes
 
-* Push changes to GitHub
-* Hosting platform (Render / Railway / etc.) auto-deploys
-* Changes reflect after successful build
+- Push changes to GitHub
+- Hosting platform (Render / Railway / etc.) auto-deploys
+- Changes reflect after successful build
 
 ---
 
 ## 🔐 Security Notes
 
-* Passwords are hashed using bcrypt
-* JWT stored in HTTP-only cookies
-* Routes protected using middleware
-* Environment variables kept secret
+- Passwords are hashed using bcrypt
+- JWT stored in HTTP-only cookies
+- Routes protected using middleware
+- Environment variables kept secret
 
 ---
 
@@ -260,15 +248,10 @@ This project is built for learning and demonstration purposes.
 ## 🙌 Acknowledgements
 
 This project demonstrates:
-
-* full-stack authentication
-* clean MVC architecture
-* production-ready patterns
+- full-stack authentication
+- clean MVC architecture
+- production-ready patterns
 
 ---
 
 ⭐ If you find this project useful, feel free to star the repository!
-
-````
-
----
