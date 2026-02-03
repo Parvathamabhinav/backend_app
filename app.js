@@ -7,8 +7,10 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const cookieParser = require('cookie-parser');
 require('dotenv').config({ quiet: true });
+
 const userModel = require('./models/user');
 const peopleModel = require('./models/people');
+const auth = require('./middlewares/auth'); // ✅ AUTH MIDDLEWARE
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -19,9 +21,8 @@ require('./config/db')(); // DB CONNECTION
 app.set('view engine', 'ejs');
 
 // =======================
-// GLOBAL MESSAGE MIDDLEWARE ✅
+// GLOBAL MESSAGE MIDDLEWARE
 // =======================
-// This ensures error & success ALWAYS exist in EJS
 app.use((req, res, next) => {
   res.locals.error = null;
   res.locals.success = null;
@@ -29,7 +30,7 @@ app.use((req, res, next) => {
 });
 
 // =======================
-// ROUTES
+// PUBLIC ROUTES
 // =======================
 
 // REGISTER PAGE
@@ -67,6 +68,7 @@ app.post('/register', async (req, res) => {
     });
   }
 });
+
 // LOGIN PAGE
 app.get('/login', (req, res) => {
   res.render('login');
@@ -107,19 +109,29 @@ app.post('/login', async (req, res) => {
   }
 });
 
+// LOGOUT (protected but simple)
+app.get('/logout', auth, (req, res) => {
+  res.clearCookie('token');
+  res.redirect('/login');
+});
+
+// =======================
+// PROTECTED ROUTES 🔐
+// =======================
+
 // INDEX PAGE
-app.get('/index', (req, res) => {
+app.get('/index', auth, (req, res) => {
   res.render('index');
 });
 
 // READ PEOPLE
-app.get('/read', async (req, res) => {
+app.get('/read', auth, async (req, res) => {
   const people = await peopleModel.find({});
   res.render('read', { people });
 });
 
 // CREATE PERSON
-app.post('/create', async (req, res) => {
+app.post('/create', auth, async (req, res) => {
   try {
     const { name, occupation, image } = req.body;
 
@@ -139,7 +151,7 @@ app.post('/create', async (req, res) => {
 });
 
 // DELETE PERSON
-app.get('/delete/:id', async (req, res) => {
+app.get('/delete/:id', auth, async (req, res) => {
   try {
     await peopleModel.findByIdAndDelete(req.params.id);
 
@@ -159,12 +171,12 @@ app.get('/delete/:id', async (req, res) => {
 });
 
 // EDIT PAGE
-app.get('/edit/:id', async (req, res) => {
+app.get('/edit/:id', auth, async (req, res) => {
   res.render('edit', { userId: req.params.id });
 });
 
 // UPDATE PERSON
-app.post('/edit', async (req, res) => {
+app.post('/edit', auth, async (req, res) => {
   try {
     const { id, name, occupation, image } = req.body;
 
@@ -189,7 +201,9 @@ app.post('/edit', async (req, res) => {
   }
 });
 
+// =======================
 // SERVER
+// =======================
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });

@@ -15,12 +15,8 @@
 <title>Our Project</title>
 
 <style>
-  body {
-    font-family: 'Satoshi', sans-serif;
-  }
-  .display-font {
-    font-family: 'Playfair Display', serif;
-  }
+  body { font-family: 'Satoshi', sans-serif; }
+  .display-font { font-family: 'Playfair Display', serif; }
 
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(20px); }
@@ -31,6 +27,18 @@
 
 <body class="min-h-screen flex items-center justify-center
              bg-gradient-to-br from-black via-zinc-900 to-black text-white">
+
+<!-- LOGOUT BUTTON -->
+<a href="/logout"
+   class="fixed top-6 right-6 z-50
+          px-5 py-2 rounded-xl
+          text-sm font-medium
+          bg-red-500/10 text-red-400
+          backdrop-blur-md border border-red-500/20
+          hover:bg-red-500/20
+          transition">
+  Logout
+</a>
 
 <div class="w-full flex flex-col items-center justify-center">
 
@@ -46,7 +54,7 @@
     Welcome to Our Project
   </h1>
 
-  <!-- MESSAGE BLOCK (FIXED POSITION) -->
+  <!-- MESSAGE BLOCK -->
   <% if (error || success) { %>
     <div
       class="mb-10 px-6 py-4 rounded-xl text-center text-sm font-medium
@@ -157,12 +165,6 @@
                  group-hover:opacity-70 transition"></span>
 
     <span class="relative flex items-center gap-2 z-10">
-      <svg xmlns="http://www.w3.org/2000/svg"
-           class="w-5 h-5 group-hover:translate-x-1 transition"
-           fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" />
-      </svg>
       View All People
     </span>
 
