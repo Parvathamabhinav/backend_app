@@ -69,7 +69,7 @@ project-root/
 │
 └── README.md
 
-````
+```
 
 ---
 
